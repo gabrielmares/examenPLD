@@ -5,7 +5,7 @@ const Header = ({ usuario }) => {
     console.log(usuario)
     return (
         <>
-            <Navbar expand="md" className="container-fluid bg-info headers" style={usuario === 'OC' ? (null) : ({ justifyContent: 'center' })}>
+            <Navbar expand="md" className="position-sticky container-fluid bg-info headers" style={usuario === 'OC' ? (null) : ({ justifyContent: 'center' })}>
                 {/* <div className="container"> */}
                     {usuario === 'OC' && (
                         <div className="col-5 collapse navbar-collapse" id="navbarSupportedContent">
