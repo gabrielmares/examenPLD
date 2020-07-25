@@ -8,7 +8,7 @@ import LayOut from './components/layout/index';
 
 // if user has been logged and refresh, the are going log again, we only use this method in dev
 // si el usuario ya se ha logeado y refresca la pagina, se borra el usuario, solo se usa en desarrollo
-localStorage.removeItem('Usuario')
+// localStorage.removeItem('Usuario')
 
 function App() {
   const User = window.localStorage.getItem('Usuario');

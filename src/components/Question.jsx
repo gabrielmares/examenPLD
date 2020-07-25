@@ -8,7 +8,7 @@ const Question = ({ question }) => {
     respuestas.ID = ID;
     return (
         <>
-            <Container className="pregunta-examen shadow mt-2 p-4 mt-4 bg-white rounded">
+            <Container className="pregunta-examen shadow p-4 mt-4 bg-white rounded">
                 <p style={{ fontSize: '1.5rem' }}>{++question.ID}. {pregunta} </p>
 
                 <Answers

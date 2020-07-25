@@ -11,24 +11,27 @@ const Exam = () => {
 
     return (
         <>
-            <Container>
+            <Container color="white" className="move-up">
 
-                <Form >
-                    <blockquote className="text-center">
-                        <p className="mt-2 h2">Preguntas</p>
-                        <footer className="blockquote-footer">Solo cuentas con un intento para contestar el examen</footer>
-                    </blockquote>
-                    {Preguntas.map((question, index) => {
-                        question.ID = index;
-                        return (
-                            <Question key={index} question={question} />
-                        )
-                    })}
-                    <Col xs={{ size: 8, offset: 1 }} md={{ size: 8, offset: 5 }} className="p-2 mt-4 align-items-center">
-                        <Button type="submit" color="primary" className="mb-2" style={{ width: '220px' }}>Enviar respuestas</Button>
-                    </Col>
-                </Form>
-            </Container >
+                <Container>
+
+                    <Form className="bg-white p-4">
+                        <blockquote className="text-center">
+                            <p className="mt-4 h2">Preguntas</p>
+                            <footer className="blockquote-footer">Solo cuentas con un intento para contestar el examen</footer>
+                        </blockquote>
+                        {Preguntas.map((question, index) => {
+                            question.ID = index;
+                            return (
+                                <Question key={index} question={question} />
+                            )
+                        })}
+                        <Col sm="12" md={{ size: 8, offset: 4 }} className="p-4 mt-4">
+                            <Button type="submit" color="primary" style={{ width: '200px' }}>Enviar respuestas</Button>
+                        </Col>
+                    </Form>
+                </Container >
+            </Container>
         </>
 
     );

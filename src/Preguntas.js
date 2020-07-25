@@ -3,153 +3,81 @@ export default {
         {
             pregunta: "Pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         },
         {
             pregunta: "Otra pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         },
         {
             pregunta: "Otra pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         }, {
             pregunta: "Otra pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         },
         {
             pregunta: "Otra pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         },
         {
             pregunta: "Otra pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         },
         {
             pregunta: "Otra pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         },
         {
             pregunta: "Otra pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         },
         {
             pregunta: "Otra pregunta",
             respuestas: [
-                {
-                    res: 'Respuesta 1'
-                },
-                {
-                    res: 'Respuesta 2'
-                },
-                {
-                    res: 'Respuesta 3'
-                },
-                {
-                    res: 'Respuesta 4'
-                },
+                "res1",
+                "res2",
+                "res3",
+                "res4"
             ]
         }
     ]

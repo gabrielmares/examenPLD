@@ -1,11 +1,7 @@
 
 .headers{
   font-family: 'Open Sans', sans-serif;
-  /* padding-top: 0.2rem; */
-  color: azure;
-  /* justify-content: center; */
-  /* height: 4rem; */
-  background-color: darkslategray;
+  color: azure;  
 }
 
 .align-center{
@@ -21,16 +17,47 @@ body{
 .color-links{
   /* margin: 1rem; */
   color: azure;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   }
 
   .color-links:hover{
     color: azure;
-    background-color: rgb(61, 109, 109);
+    /* background-color: rgb(61, 109, 109); */
     text-decoration: underline;
     
   }
 
   .text-header{
         font-size: 2rem;
+  }
+
+  .pregunta-examen{
+    padding: 0.5rem;
+  }
+
+  .respuestas{
+    margin-left: 1rem;
+  }
+
+  .layout{
+    height: auto;
+  }
+  @media (max-width: 650px) {
+   .layout{
+    height: auto;
+   }
+   .pregunta-examen{
+    padding: 0.1rem;
+    /* margin-left: 2rem; */
+    /* margin-bottom: 2rem; */
+  }
+
+  .respuestas{
+    margin-left:0.4rem;
+  }
+
+  }
+
+  .move-up{
+    margin-top: -2rem;
   }

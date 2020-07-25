@@ -12,7 +12,7 @@ const LayOut = ({UserLogin}) => {
     return (
         <>
             <Header usuario={User} />
-            <div className="body align-center">
+            <div className="body">
                 <Examen />
             </div>
         </>
