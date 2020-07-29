@@ -1,43 +1,70 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon } from 'reactstrap'
 import { AiOutlineMail, AiFillLock } from "react-icons/ai";
-import { useHistory, Route } from "react-router-dom";
+import { useHistory, Route, Redirect } from "react-router-dom";
 import LayOut from '../layout/index';
-// import Admin from '../Admin';
+import firebase from '../../firebase'
+
+import useValidator from '../../hooks/useValidator'; //Hooks para validaciones
 
 
+import userValidation from '../../rules/userValidation'; // reglas de validacion para el inicio de sesion
+
+
+const initialState = {
+    email: "",
+    password: ""
+}
 
 
 const Login = (props) => {
-    localStorage.removeItem('Usuario');
     let history = useHistory();
 
-    const [user, saveuser] = useState({
-        email: "",
-        password: ""
-    });
-    const { email, password } = user;
-    const SendEvent = e => {
-        e.preventDefault();
-        if (password === "11") {
-            window.localStorage.setItem('Usuario', 'usuario');
-            history.push('/pld/examen');
-            // eslint-disable-next-line no-unused-expressions
-            return <Route exact path='/pld/examen' render={() => <LayOut UserLogin={user} />} />
+
+    const { valuesForm,
+        errors,
+        handleSubmit,
+        handleChange } = useValidator(initialState, userValidation, loginfn);
+
+
+    // if (!userLoged) {
+    //     history.push('/pld/examen')
+    //     return <Redirect to="/pld/examen" />
+    // }
+
+
+
+
+    const { email, password } = valuesForm;
+    async function loginfn(valuesForm) {
+        const { email, password } = valuesForm;
+        try {
+            const userToLogin = await firebase.login(email, password);
+            console.log(userToLogin);
+            history.push('/pld/examen'); 
+            return <Route exact path='/pld/examen' render={(userToLogin) => <LayOut usuario={userToLogin} />} />
+        } catch (error) {
+            console.error('Hubo un error al registrar al usuario', error)
         }
-        window.localStorage.setItem('Usuario', 'OC');
-        history.push('/pld/examen');
-        // eslint-disable-next-line no-unused-expressions
-        return <Route exact to='/pld/examen' render={() => <LayOut UserLogin={user} />} />
+
 
     }
 
-    const setValue = e => {
-        saveuser({
-            ...user,
-            [e.target.name]: e.target.value
-        })
-    }
+
+    // const SendEvent = e => {
+    //     e.preventDefault();
+    //     if (password === "11") {
+    //         window.localStorage.setItem('Usuario', 'usuario');
+    //         history.push('/pld/examen');
+    //         // eslint-disable-next-line no-unused-expressions
+    //         return <Route exact path='/pld/examen' render={() => <LayOut />} />
+    //     }
+    //     window.localStorage.setItem('Usuario', 'OC');
+    //     history.push('/pld/examen');
+    //     // eslint-disable-next-line no-unused-expressions
+    //     return <Route exact to='/pld/examen' render={() => <LayOut  />} />
+
+    // }
 
     return (
 
@@ -48,7 +75,7 @@ const Login = (props) => {
                         <CardGroup>
                             <Card className="p-4">
                                 <CardBody className="align-items-center">
-                                    <Form onSubmit={SendEvent}>
+                                    <Form onSubmit={handleSubmit}>
                                         <Row>
                                             <Col m="12" className="text-center">
                                                 <h1>Inicie Sesión</h1>
@@ -61,7 +88,7 @@ const Login = (props) => {
                                                     <i > <AiOutlineMail /></i>
                                                 </InputGroupText>
                                             </InputGroupAddon>
-                                            <Input type="email" name="email" placeholder="Correo Empresarial" id="email" value={email} onChange={setValue} />
+                                            <Input type="email" className={errors.email && ('border-danger')} name="email" placeholder="Correo Empresarial" id="email" value={email} onChange={handleChange} />
                                         </InputGroup>
                                         <InputGroup className="mb-4 mt-4">
                                             <InputGroupAddon addonType="prepend">
@@ -69,7 +96,7 @@ const Login = (props) => {
                                                     <i > <AiFillLock /></i>
                                                 </InputGroupText>
                                             </InputGroupAddon>
-                                            <Input type="password" name="password" id="password" placeholder="Contraseña" value={password} onChange={setValue} />
+                                            <Input type="password" className={errors.password && ('border-danger')} name="password" id="password" placeholder="Contraseña" value={password} onChange={handleChange} />
                                         </InputGroup>
                                         <Row>
                                             <CardBody className="text-center">

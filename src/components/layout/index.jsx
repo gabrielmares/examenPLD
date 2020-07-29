@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from './Header';
 import Examen from '../Exam';
+import { FirebaseContext } from '../../firebase'
+// import { userLoged } from '../../firebase'
+// import { Redirect } from 'react-router-dom';
 
 
 
-const LayOut = ({UserLogin}) => {
+const LayOut = () => {
 
-    const User = localStorage.getItem('Usuario');
-    console.log(UserLogin)
+    const { usuario } = useContext(FirebaseContext);
+    console.log(usuario)
 
     return (
         <>
-            <Header usuario={User} />
+            <Header usuario={usuario} />
             <div className="body">
                 <Examen />
             </div>

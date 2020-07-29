@@ -5,8 +5,8 @@ export default {
             respuestas: [
                 "res1",
                 "res2",
-                "res3",
-                "res4"
+                // "res3",
+                // "res4"
             ]
         },
         {
@@ -15,7 +15,7 @@ export default {
                 "res1",
                 "res2",
                 "res3",
-                "res4"
+                // "res4"
             ]
         },
         {

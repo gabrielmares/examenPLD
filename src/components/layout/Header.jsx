@@ -1,8 +1,8 @@
 import React from 'react'
-import { NavItem, NavLink, Navbar, Nav } from 'reactstrap'
+import { NavItem, NavLink, Navbar, Nav, NavbarText } from 'reactstrap'
 
 const Header = ({ usuario }) => {
-    console.log(usuario)
+    // console.log(usuario)
     return (
         <>
             <Navbar expand="md" className="position-sticky container-fluid bg-info headers" style={usuario === 'OC' ? (null) : ({ justifyContent: 'center' })}>
@@ -27,7 +27,7 @@ const Header = ({ usuario }) => {
                     )}
                 {/* <NavbarText className="text-header"></NavbarText> */}
                 <h1>Examen de PLD</h1>
-                {/* </div> */}
+               {/* <NavbarText></NavbarText> */}
             </Navbar>
         </>
     );

@@ -3,8 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// import { ContextPLD } from '../src/firebase/index';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// import firebasePLD from '../src/firebase/index';
+// import useAuth from './hooks/useAuth'
+
+
+ReactDOM.render(
+    
+        <App />
+   
+, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
