@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Container, Button, Col } from 'reactstrap';
 
 import Question from './Question';
-import ListaPreguntas from '../Preguntas';
+import ListaPreguntas from '../../Preguntas';
 
 const Exam = () => {
 

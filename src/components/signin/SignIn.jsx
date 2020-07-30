@@ -1,43 +1,43 @@
 import React from 'react'
-import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon } from 'reactstrap'
+import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon, Button } from 'reactstrap'
 import { AiOutlineMail, AiFillLock, AiOutlineUserAdd } from "react-icons/ai";
 // import { useHistory } from "react-router-dom";
 import Header from '../layout/Header'
 import useValidator from '../../hooks/useValidator'; //Hooks para validaciones
-import firebase from '../../firebase'
+import { registerUser } from '../../firebase/firebase'
 import SignInValidation from '../../rules/signInValidation'; // reglas de validacion para el registro de usuarios
 
 
 const initialState = {
     nombre: "",
     email: "",
-    password: ""
+    password: "",
+    OC: false
 }
 
 // importar el hook de inicio de sesion
 
 const SignIn = () => {
 
+    const [check, setCheck] = React.useState(false);
+
     const { valuesForm,
         errors,
+        setValuesForm,
         handleSubmit,
         handleChange } = useValidator(initialState, SignInValidation, register);
 
 
     const { nombre, email, password } = valuesForm;
     async function register(valuesForm) {
-        const { nombre, email, password } = valuesForm;
+        const { nombre, email, password, OC } = valuesForm;
         // console.log(nombre, email, password);
         try {
-            firebase.SignIn(nombre, email, password);
+            registerUser(nombre, email, password, OC);
         } catch (error) {
             console.error('Hubo un error al registrar al usuario', error)
         }
-        valuesForm({
-            nombre: "",
-            email: "",
-            password: ""
-        })
+        setValuesForm(initialState)
     }
 
     return (
@@ -46,7 +46,7 @@ const SignIn = () => {
             <div className="mt-4 flex-row">
                 <Container>
                     <Row className="justify-content-center">
-                        <Col md="9" xs="12" lg="6" >
+                        <Col md="6" xs="9" lg="5" >
                             <CardGroup>
                                 <Card className="p-4 ">
                                     <CardBody className="align-items-center">
@@ -81,11 +81,16 @@ const SignIn = () => {
                                                 </InputGroupAddon>
                                                 <Input type="password" name="password" className={errors.password && ('border-danger')} id="password" placeholder="Contraseña" value={password} onChange={handleChange} />
                                             </InputGroup>
+                                            <InputGroup className="justify-content-left pl-2">
+                                                <Col>
+                                                    <Input type="checkbox" name="OC" value={check} onChange={() => setCheck(!check)} />Oficial de Cumplimiento
+                                                </Col>
+                                            </InputGroup>
                                             <Row>
-                                                <CardBody className="text-center">
-                                                    <div>
-                                                        <button type="submit" className="btn btn-primary btn-block">Registrar</button>
-                                                    </div>
+                                                <CardBody>
+                                                    <Col className=" d-flex justify-content-center">
+                                                        <Button color="primary" type="submit" block className="col-lg-6 col-md-9 col-xs-12">Registrar</Button>
+                                                    </Col>
                                                 </CardBody>
                                             </Row>
                                         </Form>

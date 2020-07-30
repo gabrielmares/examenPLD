@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-// import { ContextPLD } from '../src/firebase/index';
-
-// import firebasePLD from '../src/firebase/index';
-// import useAuth from './hooks/useAuth'
 
 
 ReactDOM.render(

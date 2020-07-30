@@ -1,9 +1,9 @@
 import React from 'react'
-import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon } from 'reactstrap'
+import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon, Button } from 'reactstrap'
 import { AiOutlineMail, AiFillLock } from "react-icons/ai";
-import { useHistory, Route, Redirect } from "react-router-dom";
+import { useHistory, Route } from "react-router-dom";
 import LayOut from '../layout/index';
-import firebase from '../../firebase'
+import { loginUser } from '../../firebase/firebase'
 
 import useValidator from '../../hooks/useValidator'; //Hooks para validaciones
 
@@ -27,22 +27,15 @@ const Login = (props) => {
         handleChange } = useValidator(initialState, userValidation, loginfn);
 
 
-    // if (!userLoged) {
-    //     history.push('/pld/examen')
-    //     return <Redirect to="/pld/examen" />
-    // }
-
-
-
 
     const { email, password } = valuesForm;
     async function loginfn(valuesForm) {
         const { email, password } = valuesForm;
         try {
-            const userToLogin = await firebase.login(email, password);
+            const userToLogin = await loginUser(email, password);
             console.log(userToLogin);
-            history.push('/pld/examen'); 
-            return <Route exact path='/pld/examen' render={(userToLogin) => <LayOut usuario={userToLogin} />} />
+            history.push('/examen');
+            return <Route exact path='/examen' render={(userToLogin) => <LayOut usuario={userToLogin} />} />
         } catch (error) {
             console.error('Hubo un error al registrar al usuario', error)
         }
@@ -51,20 +44,6 @@ const Login = (props) => {
     }
 
 
-    // const SendEvent = e => {
-    //     e.preventDefault();
-    //     if (password === "11") {
-    //         window.localStorage.setItem('Usuario', 'usuario');
-    //         history.push('/pld/examen');
-    //         // eslint-disable-next-line no-unused-expressions
-    //         return <Route exact path='/pld/examen' render={() => <LayOut />} />
-    //     }
-    //     window.localStorage.setItem('Usuario', 'OC');
-    //     history.push('/pld/examen');
-    //     // eslint-disable-next-line no-unused-expressions
-    //     return <Route exact to='/pld/examen' render={() => <LayOut  />} />
-
-    // }
 
     return (
 
@@ -99,16 +78,14 @@ const Login = (props) => {
                                             <Input type="password" className={errors.password && ('border-danger')} name="password" id="password" placeholder="Contraseña" value={password} onChange={handleChange} />
                                         </InputGroup>
                                         <Row>
-                                            <CardBody className="text-center">
-                                                <div>
-
-                                                    <button type="submit" className="btn btn-primary btn-block">Entrar</button>
-                                                </div>
+                                            <CardBody>
+                                                <Col className=" d-flex justify-content-center">
+                                                    <Button color="primary" type="submit" block className="col-lg-6 col-md-9 col-xs-12">Entrar</Button>
+                                                </Col>
                                             </CardBody>
                                         </Row>
                                     </Form>
                                 </CardBody>
-                                <Row className="justify-content-center"><small >Solo tiene un intento para contestar el examen</small></Row>
                             </Card>
                         </CardGroup>
                     </Col>
