@@ -5,7 +5,7 @@ const useValidator = (InitialState, errorsValidation, fnToEject) => {
     const [valuesForm, setValuesForm] = React.useState(InitialState);
     const [errors, setErrors] = React.useState({});
     const [submit, setSubmit] = React.useState(false);
-    // const [logged, setLogged] = React.useState(false);s
+
 
 
     React.useEffect(() => {
@@ -46,7 +46,8 @@ const useValidator = (InitialState, errorsValidation, fnToEject) => {
         errors,
         submit,
         handleSubmit,
-        handleChange
+        handleChange,
+        setValuesForm
     }
 }
 

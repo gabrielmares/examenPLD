@@ -1,117 +1,45 @@
-import app, { initializeApp, firestore } from 'firebase/app';
+import React from 'react';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
+// eslint-disable-next-line
 import firebaseConfig from './config';
 
-class Firebase {
-    constructor() {
-        if (!app.apps.length) {
-            app.initializeApp(firebaseConfig);
-        }
-        this.auth = app.auth();
-        this.db = app.firestore();
-        this.storage = app.storage();
-        // this.products =
-    }
 
-    // funcion que registra a los usuarios en la app
-    async register(nombre, email, password) {
-        const newUser = await this.auth.createUserWithEmailAndPassword(email, password);
-
-        return await newUser.user.updateProfile({
-            displayName: nombre
-        })
-    }
-    // iniciar sesion
-    async login(email, password) {
-        return await this.auth.signInWithEmailAndPassword(email, password);
-    }
-    // funcion para cerrar sesion
-    async logOut() {
-        await this.auth.signOut();
-    }
-    isLogged() {
-        const userID = this.auth.onIdTokenChanged;
-        return userID 
-        // return user;
-        // this.auth.onIdTokenChanged(function (user) {
-        //     if (user) {
-        //         return user
-        //     }
-        //     else {
-        //         return null
-        //     }
-        // })
-    }
-
+// funcion que registra a los usuarios en la app
+export const registerUser = async (nombre, email, password, OC) => {
+    const newUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    return await newUser.user.updateProfile({
+        displayName: nombre,
+        photoURL: `${OC}`
+    });
 };
 
-export function isLogged() {
-    const userID = firebase.auth.onIdTokenChanged;
-    return console.log(userID)
-    // return user;
-    // firebase.auth.onIdTokenChanged(function (user) {
-    //     if (user) {
-    //         return user
-    //     }
-    //     else {
-    //         return null
-    //     }
-    // })
-}
 
+// iniciar sesion
+export const loginUser = async (email, password) => {
+    return await firebase.auth().signInWithEmailAndPassword(email, password);
+};
+// funcion para cerrar sesion
+// async export function logOut() {
+//     auth().signOut();
+// };
 
-const firebase = new Firebase();
-
-export default firebase;
-
-/*
-
-
-// funtion para inicializar la app de firebase
-const firebasePLD = firebase.initializeApp(firebaseConfig);
-
-
-
-
-
-
-
-
-
-
-
-// funcion para registrar usuarios en la BD de firebase
-const userRegister = async (nombre, email, password) => {
-    const newUser = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-    return await newUser.user.updateProfile({
-        displayName: nombre
+export const useAuth = () => {
+    const [logged, saveLogged] = React.useState({
+        isSignedIn: false,
+        pending: true,
+        user: null
     });
+    React.useEffect(() => {
+        const unsuscribe = firebase.auth().onAuthStateChanged(user => {
+            saveLogged({ pending: false, user, isSignedIn: user })
+        })
+        return () => unsuscribe();
+    }, [])
 
-}
-
-const loginUser = async (email, password) => {
-    return await
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password);
-}
-
-
-const userLoged = async () => {
-    const unsuscribre= await firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-
-        } else {
-
-        }
-    })
-    return () => unsuscribre();
-}
+    return logged;
+};
 
 
-*/
-// export { firebasePLD, userRegister, loginUser, userLoged }

@@ -1,3 +1,5 @@
+import firebase from 'firebase/app'
+
 const firebaseConfig = {
     apiKey: "AIzaSyCCDQi2TNPLNv0-VzXcNNGL0zu0nXv8zHE",
     authDomain: "pld2020-2262d.firebaseapp.com",
@@ -8,4 +10,4 @@ const firebaseConfig = {
     appId: "1:167759461560:web:959006ba78ca5b1cefc84d"
 };
   
-export default firebaseConfig;
+firebase.initializeApp(firebaseConfig);
