@@ -1,10 +1,11 @@
 import React from 'react'
 import Header from './Header';
-import Examen from '../Exam';
+import Examen from '../privates/Exam';
+import HandleQuestion from "../../provider/contextAnswers";
 
+const LayOut = ({ usuario }) => {
 
-const LayOut = ({usuario}) => {
-
+    // const {  } = React.useContext(respuestasContext);
     return (
         <><HandleQuestion>
             <Header usuario={usuario} />
