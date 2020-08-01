@@ -1,4 +1,5 @@
 import React from 'react'
+<<<<<<< HEAD
 import { NavItem, NavLink, Navbar, Nav, Button, Tooltip } from 'reactstrap'
 import { logOut } from '../../firebase/firebase'
 
@@ -15,6 +16,16 @@ const Header = ({ usuario }) => {
 
                 <div className="float-right col-5 collapse navbar-collapse" id="navbarSupportedContent">
                     {typeUser && (
+=======
+import { NavItem, NavLink, Navbar, Nav } from 'reactstrap'
+
+const Header = ({ usuario }) => {
+    return (
+        <>
+            <Navbar expand="md" className="position-sticky container-fluid bg-info headers" style={usuario === 'OC' ? (null) : ({ justifyContent: 'center' })}>
+                {usuario === 'OC' && (
+                    <div className="col-5 collapse navbar-collapse" id="navbarSupportedContent">
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
                         <Nav className="mr-2" navbar>
                             <NavItem>
                                 <NavLink color="light" className="color-links mr-2" href="/pld/usuarios">Usuarios</NavLink>
@@ -24,6 +35,7 @@ const Header = ({ usuario }) => {
                             </NavItem>
 
                         </Nav>
+<<<<<<< HEAD
                     )}
                 </div>
 
@@ -35,6 +47,11 @@ const Header = ({ usuario }) => {
                         Salir del examen
                      </Tooltip>
                 </Button>
+=======
+                    </div>
+                )}
+                <h1>Examen de PLD</h1>
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
             </Navbar>
         </>
     );

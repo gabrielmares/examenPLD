@@ -8,6 +8,15 @@ import { registerUser } from '../../firebase/firebase'
 import SignInValidation from '../../rules/signInValidation'; // reglas de validacion para el registro de usuarios
 
 
+<<<<<<< HEAD
+=======
+const initialState = {
+    nombre: "",
+    email: "",
+    password: "",
+    OC: false
+}
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
 
 // importar el hook de inicio de sesion
 
@@ -15,6 +24,7 @@ const SignIn = () => {
 
     const [check, setCheck] = React.useState(false);
 
+<<<<<<< HEAD
 
     const initialState = {
         nombre: "",
@@ -22,6 +32,8 @@ const SignIn = () => {
         password: "",
         OC: false
     }
+=======
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
     const { valuesForm,
         errors,
         setValuesForm,
@@ -32,12 +44,17 @@ const SignIn = () => {
     const { nombre, email, password, OC } = valuesForm;
     async function register(valuesForm) {
         const { nombre, email, password, OC } = valuesForm;
+<<<<<<< HEAD
+=======
+        // console.log(nombre, email, password);
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
         try {
             registerUser(nombre, email, password, OC);
         } catch (error) {
             console.error('Hubo un error al registrar al usuario', error)
         }
         setValuesForm(initialState)
+<<<<<<< HEAD
     }
 
     const handleCheck = e => {
@@ -46,6 +63,8 @@ const SignIn = () => {
             ...valuesForm,
             [e.target.name]: !check
         })
+=======
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
     }
 
     return (
@@ -91,7 +110,11 @@ const SignIn = () => {
                                             </InputGroup>
                                             <InputGroup className="justify-content-left pl-2">
                                                 <Col>
+<<<<<<< HEAD
                                                     <Input type="checkbox" name="OC" checked={OC} value={OC} onChange={e => handleCheck(e)} />Oficial de Cumplimiento
+=======
+                                                    <Input type="checkbox" name="OC" value={check} onChange={() => setCheck(!check)} />Oficial de Cumplimiento
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
                                                 </Col>
                                             </InputGroup>
                                             <Row>

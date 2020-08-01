@@ -18,7 +18,11 @@ function App() {
         <Switch>
           <Route exact path="/" name="Login" component={Login} />
           <Private exact path="/registro" name="Registro" component={SignIn} />
+<<<<<<< HEAD
           <Private exact path="/inicio" name="Examen" component={LayOut} />
+=======
+          <Private exact path="/examen" name="Examen" component={LayOut} />
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
         </Switch>
       </Router>
 

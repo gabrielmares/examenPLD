@@ -13,6 +13,7 @@ export const registerUser = async (nombre, email, password, OC) => {
     return await newUser.user.updateProfile({
         displayName: nombre,
         photoURL: `${OC}`
+<<<<<<< HEAD
     });
 };
 
@@ -54,3 +55,35 @@ export const saveDocument = async (examen) => {
     }
 
 }
+=======
+    });
+};
+
+
+// iniciar sesion
+export const loginUser = async (email, password) => {
+    return await firebase.auth().signInWithEmailAndPassword(email, password);
+};
+// funcion para cerrar sesion
+// async export function logOut() {
+//     auth().signOut();
+// };
+
+export const useAuth = () => {
+    const [logged, saveLogged] = React.useState({
+        isSignedIn: false,
+        pending: true,
+        user: null
+    });
+    React.useEffect(() => {
+        const unsuscribe = firebase.auth().onAuthStateChanged(user => {
+            saveLogged({ pending: false, user, isSignedIn: user })
+        })
+        return () => unsuscribe();
+    }, [])
+
+    return logged;
+};
+
+
+>>>>>>> 6221ecb9ba349cefa26ab73acd5cbcfbc94b981a
