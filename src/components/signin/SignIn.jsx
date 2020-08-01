@@ -8,12 +8,6 @@ import { registerUser } from '../../firebase/firebase'
 import SignInValidation from '../../rules/signInValidation'; // reglas de validacion para el registro de usuarios
 
 
-const initialState = {
-    nombre: "",
-    email: "",
-    password: "",
-    OC: false
-}
 
 // importar el hook de inicio de sesion
 
@@ -21,6 +15,13 @@ const SignIn = () => {
 
     const [check, setCheck] = React.useState(false);
 
+
+    const initialState = {
+        nombre: "",
+        email: "",
+        password: "",
+        OC: false
+    }
     const { valuesForm,
         errors,
         setValuesForm,
@@ -38,6 +39,14 @@ const SignIn = () => {
             console.error('Hubo un error al registrar al usuario', error)
         }
         setValuesForm(initialState)
+    }
+
+    const handleCheck = e => {
+        setCheck(!check)
+        setValuesForm({
+            ...valuesForm,
+            [e.target.name]: !check
+        })
     }
 
     return (
@@ -83,7 +92,7 @@ const SignIn = () => {
                                             </InputGroup>
                                             <InputGroup className="justify-content-left pl-2">
                                                 <Col>
-                                                    <Input type="checkbox" name="OC" value={check} onChange={() => setCheck(!check)} />Oficial de Cumplimiento
+                                                    <Input type="checkbox" name="OC" checked={OC} value={OC} onChange={e => handleCheck(e)} />Oficial de Cumplimiento
                                                 </Col>
                                             </InputGroup>
                                             <Row>
