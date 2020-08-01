@@ -1,13 +1,13 @@
 import firebase from 'firebase/app'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCCDQi2TNPLNv0-VzXcNNGL0zu0nXv8zHE",
-    authDomain: "pld2020-2262d.firebaseapp.com",
-    databaseURL: "https://pld2020-2262d.firebaseio.com",
-    projectId: "pld2020-2262d",
-    storageBucket: "pld2020-2262d.appspot.com",
-    messagingSenderId: "167759461560",
-    appId: "1:167759461560:web:959006ba78ca5b1cefc84d"
+    apiKey: "AIzaSyBD3DgRSwwUEtYTFrHhQ12LaqTiAV6gs7E",
+    authDomain: "pld2020-6913f.firebaseapp.com",
+    databaseURL: "https://pld2020-6913f.firebaseio.com",
+    projectId: "pld2020-6913f",
+    storageBucket: "pld2020-6913f.appspot.com",
+    messagingSenderId: "602643180099",
+    appId: "1:602643180099:web:3a0b390f9a62a3c64482f6"
 };
   
 firebase.initializeApp(firebaseConfig);

@@ -32,10 +32,9 @@ const Login = (props) => {
     async function loginfn(valuesForm) {
         const { email, password } = valuesForm;
         try {
-            const userToLogin = await loginUser(email, password);
-            console.log(userToLogin);
-            history.push('/examen');
-            return <Route exact path='/examen' render={(userToLogin) => <LayOut usuario={userToLogin} />} />
+            await loginUser(email, password);
+            history.push('/inicio');
+            return <Route exact path='/inicio' component={LayOut} />
         } catch (error) {
             console.error('Hubo un error al registrar al usuario', error)
         }

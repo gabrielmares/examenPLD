@@ -1,16 +1,74 @@
 import React from 'react';
 import { Form, Container, Button, Col } from 'reactstrap';
-
+import { respuestasContext } from "../../provider/contextAnswers";
 import Question from './Question';
-import ListaPreguntas from '../../Preguntas';
+import { Preguntas } from '../../Preguntas';
 
-const Exam = () => {
+import { saveDocument } from '../../firebase/firebase';
 
-    const { Preguntas } = ListaPreguntas;
+const Exam = ({ usuario }) => {
+    let examen = {};
+    examen.usuario = {
+        id: usuario.uid,
+        nombre: usuario.displayName,
+        email: usuario.email
+    }
+
+    const { answer, setEvaluacicon, setEvaluar, evaluar } = React.useContext(respuestasContext);
+
+
+
+    const correctAnswer = [
+        Preguntas[0].respuestas[1],
+        Preguntas[1].respuestas[1],
+        Preguntas[2].respuestas[1],
+        Preguntas[3].respuestas[2],
+        Preguntas[4].respuestas[0],
+        Preguntas[5].respuestas[1],
+        Preguntas[6].respuestas[1],
+        Preguntas[7].respuestas[1],
+        Preguntas[8].respuestas[1],
+        Preguntas[9].respuestas[1]
+    ]
+    // console.log(correctAnswer.length)
+    const handleSubmitExam = e => {
+        setEvaluar(false);
+        e.preventDefault()
+        let evaluaciones = [];
+
+        examen.respuestas = answer;
+        let arrayAnswers = Object.values(answer);
+        // console.log(correctAnswer.length, answer)
+        for (let i = 0; i < correctAnswer.length; i++) {
+            if (correctAnswer[i] === arrayAnswers[i]) {
+                evaluaciones.push(true);
+            } else {
+                evaluaciones.push(false);
+            }
+
+        }
+        const correctsAnswers = evaluaciones.filter(aprovacion => aprovacion === true)
+
+        examen.calificacion = (correctsAnswers.length / Preguntas.length) * 10
+        examen.evaluacion = evaluaciones
+        try {
+            const respServer = saveDocument(examen);
+            console.log(respServer);
+        } catch (error) {
+            return (
+                console.error('Ha sucedido un error', error)
+            )
+        }
+        setEvaluacicon(evaluaciones)
+        setEvaluar(true);
+
+        // return evaluaciones;
+    }
 
 
     return (
         <>
+            {/* <HandleAnswer> */}
             <Container color="white" className="move-up">
                 <Container>
                     <Form className="bg-white p-4">
@@ -24,12 +82,13 @@ const Exam = () => {
                                 <Question key={index} question={question} />
                             )
                         })}
-                        <Col sm={{ size: 8, offset: 6 }} lg={12} xs={{ size: 8, offset: 4 }} className="block p-4 mt-4 center-item justify-content-center">
-                            <Button type="submit" color="primary" style={{ width: '220px' }}>Enviar respuestas</Button>
+                        <Col className="pt-4 d-flex justify-content-center">
+                            {!evaluar && <Button type="submit" color="primary" style={{ width: '220px' }} onClick={e => handleSubmitExam(e)}>Enviar respuestas</Button>}
                         </Col>
                     </Form>
                 </Container >
             </Container>
+            {/* </HandleAnswer> */}
         </>
 
     );

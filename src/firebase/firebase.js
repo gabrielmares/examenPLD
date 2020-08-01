@@ -22,9 +22,11 @@ export const loginUser = async (email, password) => {
     return await firebase.auth().signInWithEmailAndPassword(email, password);
 };
 // funcion para cerrar sesion
-// async export function logOut() {
-//     auth().signOut();
-// };
+
+
+export function logOut() {
+    return firebase.auth().signOut();
+};
 
 export const useAuth = () => {
     const [logged, saveLogged] = React.useState({
@@ -42,4 +44,13 @@ export const useAuth = () => {
     return logged;
 };
 
+export const saveDocument = async (examen) => {
 
+    try {
+        const conn = await firebase.firestore().collection('evaluaciones').add(examen)
+        console.log(conn)
+    } catch (error) {
+        console.error('se produjo un error', error)
+    }
+
+}
