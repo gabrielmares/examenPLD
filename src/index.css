@@ -47,8 +47,12 @@ body{
   .move-up{
     margin-top: -2rem;
   }
+  .captura-usuarios{
+    /* padding-left: 20px; */
+    padding-top: 1rem;
+  }
 
-  @media (min-width: 700px) {
+  @media (max-width: 700px) {
 
     .center-item{
       margin-left: 0px;
@@ -58,17 +62,17 @@ body{
    }
    .pregunta-examen{
     padding: 0.1rem;
-    /* margin-left: 2rem; */
-    /* margin-bottom: 2rem; */
+    
   }
   
   .respuestas{
     margin-left:0.4rem;
   }
 
-  /* .headers.center-item{
-    size: 0.8rem;
-  } */
+  .captura-usuarios{
+    /* padding-left: 5px; */
+    padding-top: 15px;
+  }
   }
 
   @media (max-width: 350){
@@ -86,6 +90,11 @@ body{
      }
     .center-item{
       margin-left: 0px;
+    }
+
+    .captura-usuarios{
+      /* padding-left: 5px; */
+      padding-top: 15px;
     }
   }
 

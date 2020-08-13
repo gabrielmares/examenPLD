@@ -4,11 +4,16 @@
 export default function userValidation(values) {
 
     let errors = {};
-
-    if (!values.password.length === 10) {
-        errors.password = "La contraseña debe ser 10 caracteres exactamente, solo numeros";
-        //como es sistema de administrado internamente, se define la contraseña del usuario de 10 digitos, solo numeros 
+    if (!values.email) {
+        errors.email = "El Correo es obligatorio";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+        errors.email = "Correo no Valido";
+    }
+    if (!values.password) {
+        errors.password = "El password es obligatorio";
+    } else if (values.password.length < 6) {
+        errors.password = "La longitud de la contraseña debe ser de 10 caracteres";
     }
     return errors;
-    
+
 }

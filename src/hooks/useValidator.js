@@ -11,9 +11,7 @@ const useValidator = (InitialState, errorsValidation, fnToEject) => {
     React.useEffect(() => {
         if (submit) {
             if (Object.keys(errors).length === 0) {
-                // const { nombre, email, password } = valuesForm;
                 fnToEject(valuesForm);
-                // setLogged(true);
             }
         }
         setSubmit(false);
@@ -35,6 +33,7 @@ const useValidator = (InitialState, errorsValidation, fnToEject) => {
         const errorsUser = errorsValidation(valuesForm);
         setErrors(errorsUser);
         // setSubmit(true)
+        console.log(errors)
         if (Object.keys(errorsUser).length === 0) {
             return setSubmit(true);
         }
@@ -47,7 +46,8 @@ const useValidator = (InitialState, errorsValidation, fnToEject) => {
         submit,
         handleSubmit,
         handleChange,
-        setValuesForm
+        setValuesForm,
+        setErrors
     }
 }
 

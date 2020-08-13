@@ -5,7 +5,6 @@ import HandleQuestion from "../../provider/contextAnswers";
 
 const LayOut = ({ usuario }) => {
 
-    // const {  } = React.useContext(respuestasContext);
     return (
         <><HandleQuestion>
             <Header usuario={usuario} />

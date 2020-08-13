@@ -3,21 +3,22 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Login from './components/signin/Login';
 import LayOut from './components/layout/index';
 import SignIn from './components/signin/SignIn';
-import Private from './components/privates/index'
-
+import Private from './components/privates/index';
+import Admin from './components/privates/Admin';
 
 
 
 function App() {
 
-
+  
   return (
     <>
-
+  
       <Router>
         <Switch>
           <Route exact path="/" name="Login" component={Login} />
-          <Private exact path="/registro" name="Registro" component={SignIn} />
+          <Private exact path="/pld/registro" name="Registro" component={SignIn} />
+          <Private exact path='/pld/resultados' component={Admin} />
           <Private exact path="/inicio" name="Examen" component={LayOut} />
         </Switch>
       </Router>

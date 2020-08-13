@@ -20,11 +20,13 @@ const initialState = {
 const Login = (props) => {
     let history = useHistory();
 
-
     const { valuesForm,
         errors,
         handleSubmit,
-        handleChange } = useValidator(initialState, userValidation, loginfn);
+        handleChange, setErrors } = useValidator(initialState, userValidation, loginfn);
+    // const [msgerror, setMsgError] = React.useState({
+
+    // })
 
 
 
@@ -32,11 +34,30 @@ const Login = (props) => {
     async function loginfn(valuesForm) {
         const { email, password } = valuesForm;
         try {
-            await loginUser(email, password);
+            const signin = await loginUser(email, password);
+            console.log(signin)
             history.push('/inicio');
             return <Route exact path='/inicio' component={LayOut} />
         } catch (error) {
-            console.error('Hubo un error al registrar al usuario', error)
+            console.error('Hubo un error al registrar al usuario', error);
+            if (error.code === "auth/wrong-password") {
+                setErrors({
+                    ...errors,
+                    password: "La contraseña no es valida"
+                })
+            }
+            if (error.code === "auth/user-not-found") {
+                setErrors({
+                    ...errors,
+                    email: "El correo que ingreso no es valido"
+                })
+            }
+            if (error.code === "auth/too-many-requests") {
+                setErrors({
+                    ...errors,
+                    intentos: "has excedido el maximo de intentos fallidos, espera 15 minutos"
+                })
+            }
         }
 
 
@@ -53,7 +74,7 @@ const Login = (props) => {
                         <CardGroup>
                             <Card className="p-4">
                                 <CardBody className="align-items-center">
-                                    <Form onSubmit={handleSubmit}>
+                                    <Form onSubmit={handleSubmit} noValidate>
                                         <Row>
                                             <Col m="12" className="text-center">
                                                 <h1>Inicie Sesión</h1>
@@ -68,6 +89,9 @@ const Login = (props) => {
                                             </InputGroupAddon>
                                             <Input type="email" className={errors.email && ('border-danger')} name="email" placeholder="Correo Empresarial" id="email" value={email} onChange={handleChange} />
                                         </InputGroup>
+                                        <div className="d-flex justify-content-center">
+                                            {errors.email && <small className="text-danger">{errors.email}</small>}
+                                        </div>
                                         <InputGroup className="mb-4 mt-4">
                                             <InputGroupAddon addonType="prepend">
                                                 <InputGroupText>
@@ -76,6 +100,10 @@ const Login = (props) => {
                                             </InputGroupAddon>
                                             <Input type="password" className={errors.password && ('border-danger')} name="password" id="password" placeholder="Contraseña" value={password} onChange={handleChange} />
                                         </InputGroup>
+                                        <div className="d-flex justify-content-center">
+                                            {errors.password && <small className="text-danger">{errors.password}</small>}
+                                        </div>
+
                                         <Row>
                                             <CardBody>
                                                 <Col className=" d-flex justify-content-center">
@@ -89,6 +117,9 @@ const Login = (props) => {
                         </CardGroup>
                     </Col>
                 </Row>
+                <div className="d-flex justify-content-center">
+                    {errors.intentos && <small className="text-danger">{errors.intentos}</small>}
+                </div>
             </Container>
         </div>
     );
