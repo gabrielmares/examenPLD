@@ -1,22 +1,19 @@
 import React from 'react'
 import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon, Button } from 'reactstrap'
 import { AiOutlineMail, AiFillLock, AiOutlineUserAdd } from "react-icons/ai";
-// import { useHistory } from "react-router-dom";
 import Header from '../layout/Header'
 import useValidator from '../../hooks/useValidator'; //Hooks para validaciones
-import { registerUser } from '../../firebase/firebase'
 import SignInValidation from '../../rules/signInValidation'; // reglas de validacion para el registro de usuarios
-import clienteAxios from '../../axiosClient';
 import ListUserCard from '../privates/ListUsers'
-// import axios from 'axios'
-
+import HandleAnswer from '../../provider/contextAnswers'
+import axios from 'axios'
 
 // importar el hook de inicio de sesion
 
 const SignIn = () => {
 
     const [check, setCheck] = React.useState(false); //state para uso del check input
-    const [listUser, setListUser] = React.useState(false);
+    const [update, setUpdate] = React.useState(false);
 
     const initialState = {
         nombre: "",
@@ -32,39 +29,31 @@ const SignIn = () => {
 
 
 
-    React.useEffect(() => {
-        // fncion que solicita al servidor la lista de usuarios registrados
-        if (!listUser) {
-            async function getAll() {
-                await clienteAxios.get('/listadeusuarios')
-                    .then(res => {
-                        setListUser(res)
-                    })
-                    .catch(e => console.log(e))
-            }
-            getAll();
-        }
-
-    }, [setListUser, listUser])
-
-    // si el objeto de lista de usuarios esta vacio, se retorna hasta que contenga algo
-    if (!listUser) {
-        return false
-    }
-    // console.log(listUser)
-
-
     // destructuramos los valores del objeto en el context para asignarlos en los campos del form
     const { nombre, email, password, OC } = valuesForm;
     async function register(valuesForm) {
+        // eslint-disable-next-line
         const { nombre, email, password, OC } = valuesForm;
-
         try {
-            registerUser(nombre, email, password, OC);
+            // el registro de usuarios es por API REST, de la otra manera registraba al usuario y cerraba la sesion activa
+            //en este metodo, registra, sin cambiar la sesion activa
+            await axios.post(`${process.env.REACT_APP_URL_REGISTER}=${process.env.REACT_APP_APIKEY}`, {
+                email,
+                password,
+                displayName: nombre,
+                photoURL: function user(OC) {
+                    if (OC) {
+                        return 1
+                    }
+                    return 0
+                }
+            })
+            // registerUser(nombre, email, password, OC);
         } catch (error) {
             console.error('Hubo un error al registrar al usuario', error)
         }
-        setValuesForm(initialState)
+        setUpdate(true);
+        setValuesForm(initialState);
     }
     /*funcion que revisa cuando se registra a un usuario normal o un administrador*/
 
@@ -79,14 +68,12 @@ const SignIn = () => {
 
 
     return (
-        <>
-            <Header />
-
-            <Container fluid={true}>
-                <Row className="p-4">
-                    <Col lg={{ size: 3, offset: 2 }}>
+            <>
+            {/* <Container fluid={true}> */}
+                {/* <Row className="p-4"> */}
+                    {/* <Col > */}
                         <CardGroup>
-                            <Card className="p-4">
+                            <Card >
                                 <CardBody className="align-items-center">
                                     <Form onSubmit={handleSubmit} noValidate>
                                         <Row>
@@ -135,13 +122,13 @@ const SignIn = () => {
                                 </CardBody>
                             </Card>
                         </CardGroup>
-                    </Col>
-                    <Col lg={{  size: 5, offset: 1  }}>
-                        <ListUserCard usuarios={listUser} />
-                    </Col>
-                </Row>
+                    {/* </Col> */}
+                    {/* <Col lg={{ size: 4, offset: 1 }}>
+                        <ListUserCard actualizar={setUpdate} validar={update} />
+                    </Col> */}
+                {/* </Row>
 
-            </Container>
+            </Container> */}
         </>
     );
 }

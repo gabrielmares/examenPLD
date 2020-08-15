@@ -33,7 +33,7 @@ const useValidator = (InitialState, errorsValidation, fnToEject) => {
         const errorsUser = errorsValidation(valuesForm);
         setErrors(errorsUser);
         // setSubmit(true)
-        console.log(errors)
+        // console.log(errors)
         if (Object.keys(errorsUser).length === 0) {
             return setSubmit(true);
         }

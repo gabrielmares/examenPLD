@@ -10,10 +10,16 @@ import firebaseConfig from './config';
 // firebase.initializeApp(firebaseConfig);
 // funcion que registra a los usuarios en la app
 export const registerUser = async (nombre, email, password, OC) => {
+    console.log(OC)
     const newUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
     return await newUser.user.updateProfile({
         displayName: nombre,
-        photoURL: `${OC}`
+        photoURL: function type(OC) {
+            if (OC) {
+                return 1
+            }
+            return 0
+        }
     });
 };
 
@@ -60,3 +66,6 @@ export const saveDocument = async (examen) => {
 
 }
 
+// export const toDeleteUser = () => {
+//     firebase.auth().user
+// }

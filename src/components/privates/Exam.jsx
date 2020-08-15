@@ -68,7 +68,7 @@ const Exam = ({ usuario }) => {
 
     return (
         <>
-            {/* <HandleAnswer> */}
+            
             <Container color="white" className="move-up">
                 <Container>
                     <Form className="bg-white p-4">
@@ -88,7 +88,7 @@ const Exam = ({ usuario }) => {
                     </Form>
                 </Container >
             </Container>
-            {/* </HandleAnswer> */}
+            
         </>
 
     );

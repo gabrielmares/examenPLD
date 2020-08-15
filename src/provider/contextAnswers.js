@@ -1,7 +1,5 @@
-// const { createContext } = require("react");
 
 import React from 'react';
-// import { Preguntas } from '../Preguntas'
 
 export const respuestasContext = React.createContext();
 
@@ -27,7 +25,6 @@ const HandleAnswer = (props) => {
 
 
     const handleQuestion = e => {
-        // console.log(e.target.key)
         setAnswer({
             ...answer,
             [e.target.name]: e.target.value
