@@ -5,21 +5,23 @@ import RegisterContext from '../provider/contextRegister';
 import Header from '../components/layout/Header'
 
 
-const Registerpage = () => {
+// const NewListCard = React.lazy(() => import('../components/privates/ListUsers'));
 
+const Registerpage = () => {
 
     return (
         <>
             <RegisterContext>
                 <Header />
                 <div className="row p-4">
-                    <div className="offset-1 col-4">
+                    <div className="offset-2 col-4">
                         <SignIn />
                     </div>
-                    <div className="offset-1 col-4">
+                    <div className="col-4">
                         <ListUserCard />
                     </div>
                 </div>
+
             </RegisterContext>
         </>
 
