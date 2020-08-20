@@ -31,7 +31,19 @@ export const registerUser = async (nombre, email, password, OC) => {
 // iniciar sesion
 export const loginUser = async (email, password) => {
     // console.log(firebaseConfig.apiKey)
-    return await firebase.auth().signInWithEmailAndPassword(email, password);
+    return await firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(async user => {
+            // console.log(user)
+            if (user) {
+                let tokenID = await firebase.auth().currentUser.getIdTokenResult();
+                return tokenID;
+            }
+        })
+        .catch(e => {
+            console.log(e)
+            return e;
+        })
+
 };
 
 

@@ -1,16 +1,19 @@
 import React from 'react'
-import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon, Button } from 'reactstrap'
+import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon, Button, Spinner } from 'reactstrap'
 import { AiOutlineMail, AiFillLock } from "react-icons/ai";
-import { useHistory, Route } from "react-router-dom";
-import LayOut from '../layout/index';
+import { useHistory } from "react-router-dom";
 import { loginUser } from '../../firebase/firebase'
-import { registroContext } from '../../provider/contextRegister'
+import ExamenPage from '../../pages/Exam'
+import ResultsPage from '../../pages/Results'
+// import clienteAxios from '../../axiosClient'
+// import { registroContext } from '../../provider/contextRegister'
 
 import useValidator from '../../hooks/useValidator'; //Hooks para validaciones
 
 
 import userValidation from '../../rules/userValidation'; // reglas de validacion para el inicio de sesion
-import Private from '../privates';
+import { PrivateUser } from '../privates';
+import { registroContext } from '../../provider/contextRegister';
 
 
 const initialState = {
@@ -27,15 +30,29 @@ const Login = (props) => {
         handleSubmit,
         handleChange, setErrors } = useValidator(initialState, userValidation, loginfn);
 
+
+    // extraer el context para el spinner de carga de datos
+
+
+
     const { email, password } = valuesForm;
     async function loginfn(valuesForm) {
         const { email, password } = valuesForm;
         try {
-            const signin = await loginUser(email, password);
-            console.log(signin)
-            // setSessionValues(signin);
-            history.push('/inicio');
-            return <Private exact path='/inicio' component={LayOut} />
+            await loginUser(email, password)
+                .then(auth => {
+                    if (auth.claims.oficial) {
+                        history.push('/pld/resultados');
+                        return <PrivateUser exact path='/pld/resultados' component={ResultsPage} />
+                    }
+                    history.push('/inicio');
+                    return <PrivateUser exact path='/inicio' component={ExamenPage} />
+
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+
         } catch (error) {
             console.error('Hubo un error al registrar al usuario', error);
             if (error.code === "auth/wrong-password") {
@@ -64,6 +81,7 @@ const Login = (props) => {
 
 
     return (
+
 
         <div className="align-center flex-row align-items-center">
             <Container>
