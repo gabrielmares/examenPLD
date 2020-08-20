@@ -32,9 +32,9 @@ const Header = (props) => {
 
                 <div className="float-right col-5 collapse navbar-collapse" id="navbarSupportedContent">
                     {oficial && (
-                        <Nav className="mr-2" navbar>
+                        <Nav className="mr-4" navbar>
                             <NavItem>
-                                <NavLink color="light" className="color-links mr-2" to="/pld/registro">Usuarios</NavLink>
+                                <NavLink color="light" className="color-links m-4" to="/pld/registro">Usuarios</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink className="color-links" to="/pld/resultados">Resultados</NavLink>
