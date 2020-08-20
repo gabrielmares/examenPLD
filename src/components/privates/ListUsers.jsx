@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, UncontrolledTooltip, Button } from 'reactstrap'
+import { Card, CardHeader, UncontrolledTooltip, Button, Table, CardBody } from 'reactstrap'
 import clienteAxios from '../../axiosClient';
 import { MdClear, MdRefresh, } from 'react-icons/md';
 import { registroContext } from '../../provider/contextRegister'
@@ -28,7 +28,7 @@ const ListUserCard = () => {
             getAll();
         }
         setUpdate(false);
-    }, [setListUser, update, setUpdate])
+    }, [setListUser, update, setUpdate]);
 
     // si el objeto de lista de usuarios esta vacio, se retorna hasta que contenga algo
     if (!listUser) {
@@ -64,68 +64,69 @@ const ListUserCard = () => {
 
     }
 
-
-
+   
     return (
         <>
+
             <Card>
-
                 <CardHeader className="text-center"><b>Usuarios Registrados</b></CardHeader>
-                <table className="table table-bordered table-striped">
-                    <thead className="thead-dark">
-                        <tr className="text-center">
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Accion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((user, index) => {
-                            const { email, displayName, uid } = user
-                            return (
-                                <tr key={index}>
-                                    <th>{displayName || "vacio"}</th>
-                                    <td>{email}</td>
-                                    <td className="text-center">
-                                        {/* Boton de actualizar contraseña con tooltip */}
-                                        <Button color="link"
-                                            name={uid}
-                                            onClick={e => toRefresh(e)}
-                                        >
-                                            <MdRefresh
-                                                id="actualizar"
-                                                type="button"
-                                                size="20px"
-                                                color="blue"
-
-                                            />
-                                            <UncontrolledTooltip placement="bottom" target="actualizar">
-                                                Restablecer contraseña
-                                            </UncontrolledTooltip>
-
-                                        </Button>
-                                        {/* Boton de eliminar con tooltip */}
-                                        <Button color="link"
-
-                                        >
-                                            <MdClear
-                                                id="eliminar"
-                                                type="button"
-                                                color="red"
-                                                size='20px'
+                <CardBody>
+                    <Table bordered responsive size="sm" >
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th className="text-center">Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map((user, index) => {
+                                const { email, displayName, uid } = user
+                                return (
+                                    <tr key={index}>
+                                        <th>{displayName || "vacio"}</th>
+                                        <td>{email}</td>
+                                        <td className="text-center">
+                                            {/* Boton de actualizar contraseña con tooltip */}
+                                            <Button color="link"
                                                 name={uid}
-                                                onClick={() => toDelete(uid)}
-                                            />
-                                            <UncontrolledTooltip placement="bottom" target="eliminar">
-                                                Borrar Usuario
+                                                onClick={e => toRefresh(e)}
+                                            >
+                                                <MdRefresh
+                                                    id="actualizar"
+                                                    type="button"
+                                                    size="20px"
+                                                    color="blue"
+
+                                                />
+                                                <UncontrolledTooltip placement="bottom" target="actualizar">
+                                                    Restablecer contraseña
                                             </UncontrolledTooltip>
-                                        </Button>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+
+                                            </Button>
+                                            {/* Boton de eliminar con tooltip */}
+                                            <Button color="link"
+
+                                            >
+                                                <MdClear
+                                                    id="eliminar"
+                                                    type="button"
+                                                    color="red"
+                                                    size='20px'
+                                                    name={uid}
+                                                    onClick={() => toDelete(uid)}
+                                                />
+                                                <UncontrolledTooltip placement="bottom" target="eliminar">
+                                                    Borrar Usuario
+                                            </UncontrolledTooltip>
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </Table>
+                </CardBody>
             </Card>
 
         </>
