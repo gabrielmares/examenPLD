@@ -60,8 +60,9 @@ const SignIn = () => {
         setUpdate(true);
         setValuesForm(initialState);
     }
-    /*funcion que revisa cuando se registra a un usuario normal o un administrador*/
 
+
+    /*funcion que revisa cuando se registra a un usuario normal o un administrador*/
     const handleCheck = e => {
         setCheck(!check)
         setValuesForm({
@@ -69,7 +70,6 @@ const SignIn = () => {
             [e.target.name]: !check
         })
     }
-
 
 
     return (
