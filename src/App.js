@@ -1,28 +1,31 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import Login from './components/signin/Login';
-import LayOut from './components/layout/index';
+// import Login from './components/signin/Login';
+// import LayOut from './components/layout/index';
 // import SignIn from './components/signin/SignIn';
-import Private from './components/privates/index';
-import Admin from './components/privates/Admin';
+import Private, { PrivateUser } from './components/privates/index';
+
+// import Admin from './components/privates/Admin';
 
 // paginas
 import Register from './pages/Register';
+import LoginPage from './pages/Login';
+import ExamenPage from './pages/Exam';
+import ResultsPage from './pages/Results'
 
 
+function App(props) {
 
-function App() {
 
-  
   return (
     <>
-  
+
       <Router>
         <Switch>
-          <Route exact path="/" name="Login" component={Login} />
+          <Route exact path="/" name="Login" component={LoginPage} />
           <Private exact path="/pld/registro" name="Registro" component={Register} />
-          <Private exact path='/pld/resultados' component={Admin} />
-          <Private exact path="/inicio" name="Examen" component={LayOut} />
+          <Private exact path='/pld/resultados' component={ResultsPage} />
+          <PrivateUser exact path="/inicio" name="Examen" component={ExamenPage} />
         </Switch>
       </Router>
 

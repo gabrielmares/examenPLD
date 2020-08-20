@@ -6,6 +6,8 @@ import Header from '../components/layout/Header'
 
 
 const Registerpage = () => {
+
+
     return (
         <>
             <RegisterContext>

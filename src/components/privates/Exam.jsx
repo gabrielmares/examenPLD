@@ -1,22 +1,18 @@
 import React from 'react';
 import { Form, Container, Button, Col } from 'reactstrap';
 import { respuestasContext } from "../../provider/contextAnswers";
+// import { registroContext } from '../../provider/contextRegister'
 import Question from './Question';
 import { Preguntas } from '../../Preguntas';
 
 import { saveDocument } from '../../firebase/firebase';
 
-const Exam = ({ usuario }) => {
+const Exam = (props) => {
     let examen = {};
-    examen.usuario = {
-        id: usuario.uid,
-        nombre: usuario.displayName,
-        email: usuario.email
-    }
+
 
     const { answer, setEvaluacicon, setEvaluar, evaluar } = React.useContext(respuestasContext);
-
-
+    // const { infoToken } = React.useContext(registroContext)
 
     const correctAnswer = [
         Preguntas[0].respuestas[1],
@@ -68,7 +64,7 @@ const Exam = ({ usuario }) => {
 
     return (
         <>
-            
+
             <Container color="white" className="move-up">
                 <Container>
                     <Form className="bg-white p-4">
@@ -88,7 +84,7 @@ const Exam = ({ usuario }) => {
                     </Form>
                 </Container >
             </Container>
-            
+
         </>
 
     );

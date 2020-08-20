@@ -4,11 +4,13 @@ import { AiOutlineMail, AiFillLock } from "react-icons/ai";
 import { useHistory, Route } from "react-router-dom";
 import LayOut from '../layout/index';
 import { loginUser } from '../../firebase/firebase'
+import { registroContext } from '../../provider/contextRegister'
 
 import useValidator from '../../hooks/useValidator'; //Hooks para validaciones
 
 
 import userValidation from '../../rules/userValidation'; // reglas de validacion para el inicio de sesion
+import Private from '../privates';
 
 
 const initialState = {
@@ -24,11 +26,6 @@ const Login = (props) => {
         errors,
         handleSubmit,
         handleChange, setErrors } = useValidator(initialState, userValidation, loginfn);
-    // const [msgerror, setMsgError] = React.useState({
-
-    // })
-
-
 
     const { email, password } = valuesForm;
     async function loginfn(valuesForm) {
@@ -36,8 +33,9 @@ const Login = (props) => {
         try {
             const signin = await loginUser(email, password);
             console.log(signin)
+            // setSessionValues(signin);
             history.push('/inicio');
-            return <Route exact path='/inicio' component={LayOut} />
+            return <Private exact path='/inicio' component={LayOut} />
         } catch (error) {
             console.error('Hubo un error al registrar al usuario', error);
             if (error.code === "auth/wrong-password") {

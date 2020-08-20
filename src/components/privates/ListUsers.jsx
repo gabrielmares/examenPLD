@@ -3,13 +3,17 @@ import { Card, CardHeader, UncontrolledTooltip, Button } from 'reactstrap'
 import clienteAxios from '../../axiosClient';
 import { MdClear, MdRefresh, } from 'react-icons/md';
 import { registroContext } from '../../provider/contextRegister'
+// import { getToken } from '../../firebase/firebase'
+// import axios from 'axios';
+// import dotenv from 'dotenv'
+// dotenv.config();
+
 
 
 
 const ListUserCard = () => {
-    // const { update, setUpdate } = actualizar;
     const [listUser, setListUser] = React.useState(false);
-    const { update, setUpdate } = React.useContext(registroContext)
+    const { update, setUpdate, userInfo } = React.useContext(registroContext)
 
     React.useEffect(() => {
         // fncion que solicita al servidor la lista de usuarios registrados
@@ -31,21 +35,33 @@ const ListUserCard = () => {
         return false
     }
     const { data: { users } } = listUser;
+    // console.log(listUser)
 
-    console.log(users)
+
+    // funcion que refresca la contraseña del usuario
     const toRefresh = uid => {
-        console.log('actualizar', uid)
+
+        console.log(userInfo.token.token)
     }
 
+    // funcion para eliminar la cuenta registrada a un usuario
     const toDelete = async uid => {
-        let respuesta = await clienteAxios('/eliminarusuario', {
+        await clienteAxios.delete(`api/delete`, {
             params: {
                 uid
+            },
+            headers: {
+                'authorization': `Bearer ${userInfo.token.token}`
             }
-        });
-        if (respuesta.request.status === 200) {
-            setUpdate(true);
-        }
+        })
+            .then(res => {
+                setUpdate(true);
+            })
+            .catch(e => {
+                console.error(e)
+            })
+
+
     }
 
 
