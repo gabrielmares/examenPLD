@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon, Button, Spinner } from 'reactstrap'
+import { Card, Input, Form, Col, Container, Row, CardGroup, CardBody, InputGroup, InputGroupText, InputGroupAddon, Button } from 'reactstrap'
 import { AiOutlineMail, AiFillLock } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
 import { loginUser } from '../../firebase/firebase'
@@ -13,7 +13,6 @@ import useValidator from '../../hooks/useValidator'; //Hooks para validaciones
 
 import userValidation from '../../rules/userValidation'; // reglas de validacion para el inicio de sesion
 import { PrivateUser } from '../privates';
-import { registroContext } from '../../provider/contextRegister';
 
 
 const initialState = {
