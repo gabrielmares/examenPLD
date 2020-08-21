@@ -41,7 +41,7 @@ const SignIn = () => {
     async function register(valuesForm) {
 
         try {
-            await clienteAxios.post(`api/nuevo`, valuesForm, {
+            await clienteAxios.post(`/nuevo`, valuesForm, {
                 headers: {
                     'authorization': `Bearer ${userInfo.token.token}`
                 }
