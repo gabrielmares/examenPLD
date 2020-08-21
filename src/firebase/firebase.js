@@ -99,29 +99,15 @@ export const saveDocument = async (examen) => {
 }
 
 
-
-// // obtener el token de sesion y datos del usuario
-// export const GetInfo = () => {
-//     const [logged, saveLogged] = React.useState({
-//         isSignedIn: false,
-//         pending: true,
-//         user: null,
-//         token: ''
-//     });
-//     React.useEffect(() => {
-//         const tokenId = firebase.auth().currentUser.getIdTokenResult()
-//             .then(res => {
-//                 saveLogged({
-//                     isSignedIn: true,
-//                     pending: false,
-//                     user: res.claims,
-//                     token: res.token
-//                 })
-//             })
-//             .catch(e => {
-//                 return e;
-//             })
-//         return () => tokenId();
-//     }, [])
-//     return logged;
-// }
+// generar email de restablecimiento de contraseña
+export const ResetPassword = async email => {
+    let mensage;
+    await firebase.auth().sendPasswordResetEmail(email)
+        .then(resp => {
+            mensage = 200;
+        })
+        .catch(e => {
+            mensage = 404;
+        })
+    return mensage;
+}
