@@ -46,8 +46,9 @@ const SignIn = () => {
                     'authorization': `Bearer ${userInfo.token.token}`
                 }
             })
-                .then(res => {
-                    console.log(res)
+                .then(() => {
+                    setUpdate(true);
+                    setValuesForm(initialState);
                 })
         } catch (error) {
             setErrors({
@@ -57,8 +58,7 @@ const SignIn = () => {
             return console.error('Hubo un error al registrar al usuario', error)
 
         }
-        setUpdate(true);
-        setValuesForm(initialState);
+
     }
 
 
