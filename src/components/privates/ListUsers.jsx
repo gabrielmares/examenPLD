@@ -1,23 +1,18 @@
 import React from 'react';
-import { Card, CardHeader, UncontrolledTooltip, Button, Table, CardBody, Modal, ModalBody, ModalFooter } from 'reactstrap'
+import { Card, CardHeader, UncontrolledTooltip, Button, Table, CardBody } from 'reactstrap'
 import clienteAxios from '../../axiosClient';
 import { MdClear, MdRefresh, } from 'react-icons/md';
 import { registroContext } from '../../provider/contextRegister'
 import { ResetPassword } from '../../firebase/firebase'
-// import ModalDialog from '../../components/layout/modal'
-// import axios from 'axios';
-// import dotenv from 'dotenv'
-// dotenv.config();
+
 
 
 
 
 const ListUserCard = () => {
     const [listUser, setListUser] = React.useState(false);
-    const { update, setUpdate, userInfo } = React.useContext(registroContext)
-    const [modal, setModal] = React.useState(false);
+    const { update, setUpdate, userInfo, setModal } = React.useContext(registroContext)
 
-    // console.log(userInfo)
     React.useEffect(() => {
         if (update || !userInfo.pending) {
             async function getAll() {
@@ -50,12 +45,14 @@ const ListUserCard = () => {
 
     // funcion que refresca la contraseña del usuario
     const toRefresh = async (email) => {
-        // console.log(email)
         try {
             const reset = await ResetPassword(email);
-            console.log(reset)
+            // console.log(reset)
             if (reset === 200) {
-                setModal(true)
+                return setModal({
+                    state: true,
+                    mensaje: `se envio un mensaje al ${email} para restablecer su contraseña`
+                })
             }
 
         } catch (error) {
@@ -65,7 +62,7 @@ const ListUserCard = () => {
     }
 
     // funcion para eliminar la cuenta registrada a un usuario
-    const toDelete = async uid => {
+    const toDelete = async (uid, email) => {
         await clienteAxios.delete(`/delete`, {
             params: {
                 uid
@@ -76,6 +73,11 @@ const ListUserCard = () => {
         })
             .then(res => {
                 setUpdate(true);
+                return setModal({
+                    state: true,
+                    mensaje: `se elimino el usuario ${email}`
+                })
+
             })
             .catch(e => {
                 console.error(e)
@@ -84,7 +86,7 @@ const ListUserCard = () => {
 
     }
 
-    const toggle = () => setModal(!modal);
+
     return (
         <>
 
@@ -136,7 +138,7 @@ const ListUserCard = () => {
                                                     color="red"
                                                     size='20px'
                                                     name={uid}
-                                                    onClick={() => toDelete(uid)}
+                                                    onClick={() => toDelete(uid, email)}
                                                 />
                                                 <UncontrolledTooltip placement="bottom" target="eliminar">
                                                     Borrar Usuario
@@ -154,14 +156,7 @@ const ListUserCard = () => {
             </Card>
 
 
-            <Modal isOpen={modal}>
-                <ModalBody>
-                   Se envio un correo de restablecimiento
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={toggle}>Cerrar</Button>
-                </ModalFooter>
-            </Modal>
+
         </>
 
     );
@@ -169,12 +164,3 @@ const ListUserCard = () => {
 
 export default ListUserCard;
 
-
-// const ModalDialog = () => {
-
-//     return (
-//         <>
-
-//         </>
-//     )
-// }
