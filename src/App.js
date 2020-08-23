@@ -1,11 +1,7 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-// import Login from './components/signin/Login';
-// import LayOut from './components/layout/index';
-// import SignIn from './components/signin/SignIn';
 import Private, { PrivateUser } from './components/privates/index';
 
-// import Admin from './components/privates/Admin';
 
 // paginas
 import Register from './pages/Register';
@@ -27,7 +23,7 @@ function App(props) {
           <Private exact path='/pld/resultados' component={ResultsPage} />
           <PrivateUser exact path="/inicio" name="Examen" component={ExamenPage} />
         </Switch>
-      </Router>
+    </Router>
 
     </>
   );
