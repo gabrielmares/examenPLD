@@ -25,35 +25,34 @@ const Header = (props) => {
 
 
 
-
     return (
-        <>
-            <Navbar expand="lg" className="container-fluid bg-info headers" style={oficial ? (null) : ({ justifyContent: 'center' })}>
 
-                <div className="float-right col-5 collapse navbar-collapse" id="navbarSupportedContent">
-                    {oficial && (
-                        <Nav className="mr-4" navbar>
-                            <NavItem>
-                                <NavLink color="light" className="color-links m-4" to="/pld/registro">Usuarios</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="color-links" to="/pld/resultados">Resultados</NavLink>
-                            </NavItem>
-                        </Nav>
-                    )}
-                    {/* <Button color="white" onClick={getToken}>Get Token</Button> */}
-                </div>
+        <Navbar expand="lg" className="bg-info headers" style={oficial ? (null) : ({ justifyContent: 'center' })}>
 
-                <h1 className="mr-auto">Examen de PLD</h1>
+            <div className="float-right col-5 collapse navbar-collapse" id="navbarSupportedContent">
+                {oficial && (
+                    <Nav className="mr-4" navbar>
+                        <NavItem>
+                            <NavLink color="light" className="color-links m-4" to="/pld/registro">Usuarios</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="color-links" to="/pld/resultados">Resultados</NavLink>
+                        </NavItem>
+                    </Nav>
+                )}
+            </div>
 
-                <Button color="info" type="input" id="infoClose" onClick={closeSession}>
-                    <span className="name" >{name}</span>
-                    <Tooltip placement="bottom" isOpen={tooltipOpen} autohide={false} target="infoClose" toggle={toggle}>
-                        Salir del examen
+            <h2 className="mr-auto">Examen de PLD</h2>
+
+            {oficial && (<Button color="info" type="input" id="infoClose" onClick={closeSession}>
+                <span>{name.split(' ')[0]}</span>
+                <Tooltip placement="bottom" isOpen={tooltipOpen} autohide={false} target="infoClose" toggle={toggle}>
+                    Salir del examen
                      </Tooltip>
-                </Button>
-            </Navbar>
-        </>
+            </Button>)}
+
+
+        </Navbar>
     );
 }
 

@@ -86,9 +86,9 @@ export const useAuth = () => {
 // grabar un documento en la coleccion
 export const saveDocument = async (examen) => {
     try {
-        await firebase.firestore().collection('evaluaciones').add(examen)
+        await firebase.firestore().collection('evaluaciones').doc(examen.usuario.email).set(examen)
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 return res;
             })
 
@@ -110,4 +110,13 @@ export const ResetPassword = async email => {
             mensage = 404;
         })
     return mensage;
+}
+
+
+// revisar si ya realizo el examen anteriormente
+export const OnlyOne = async email => {
+    const doc = await firebase.firestore().collection('evaluaciones').doc(email).get();
+        // console.log(doc.exists)
+    return doc;
+
 }
