@@ -21,6 +21,8 @@ const HandleAnswer = (props) => {
 
     });
 
+    const [timeOut, setTimeOut] = React.useState(false);
+
     const [evaluar, setEvaluar] = React.useState(false);
     const [print, setPrint] = React.useState(false);
 
@@ -53,6 +55,15 @@ const HandleAnswer = (props) => {
         })
     }
 
+    const handleTime = hoy => {
+        const fechaExamen = new Date('September 1, 2020 15:25:00');
+        console.log(fechaExamen, " \r", hoy)
+        console.log(fechaExamen-hoy)
+        if (fechaExamen < hoy) {
+            return setTimeOut(true)
+        }
+    }
+
 
     return (
         <respuestasContext.Provider
@@ -62,7 +73,9 @@ const HandleAnswer = (props) => {
                 evaluar,
                 option,
                 print,
+                timeOut,
                 setPrint,
+                handleTime,
                 setEvaluar,
                 setEvaluacicon,
                 setAnswer,

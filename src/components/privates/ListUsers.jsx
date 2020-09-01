@@ -14,7 +14,7 @@ const ListUserCard = () => {
     const { update, setUpdate, userInfo, setModal, listUser, setListUser } = React.useContext(registroContext)
 
     React.useEffect(() => {
-        if (update || !userInfo.pending) {
+        if (update || userInfo.token) {
             function getAll() {
                 clienteAxios.get('/usuarios', {
                     headers: {
@@ -25,23 +25,24 @@ const ListUserCard = () => {
                         setListUser(res)
                     })
                     .catch(e => console.log(e))
-                setUpdate(false);
             }
-            return getAll();
+            getAll();
+            setUpdate(false);
         }
 
     }, [setListUser, update, setUpdate, userInfo]);
 
 
 
-    console.log(userInfo.pending)
+    // console.log(userInfo.pending)
 
     // si el objeto de lista de usuarios esta vacio, se retorna hasta que contenga algo
     if (userInfo.pending || !listUser) {
         return false
     }
-
+    // debugger
     const { data: { users } } = listUser;
+
     // console.log(listUser)
 
 
@@ -49,18 +50,18 @@ const ListUserCard = () => {
     const toRefresh = async (email) => {
         try {
             const reset = await ResetPassword(email);
-            // console.log(reset)
             if (reset === 200) {
                 return setModal({
                     state: true,
                     mensaje: `se envio un mensaje al ${email} para restablecer su contraseña`
                 })
+
             }
 
         } catch (error) {
             console.error(error)
         }
-
+        
     }
 
     // funcion para eliminar la cuenta registrada a un usuario

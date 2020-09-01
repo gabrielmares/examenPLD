@@ -5,12 +5,15 @@ import { Modal, ModalFooter, ModalBody, Button } from 'reactstrap'
 
 const ModalDialog = () => {
 
-    const { modal, setModal } = React.useContext(registroContext);
+    const { modal, setModal, setUpdate } = React.useContext(registroContext);
     const { state, mensaje } = modal;
-    const toggle = () => setModal({
-        state: !modal.state,
-        mensaje: ''
-    });
+    const toggle = () => {
+        setUpdate(true)
+        setModal({
+            state: !modal.state,
+            mensaje: ''
+        })
+    };
     return (
         <Modal isOpen={state} className="modal-dialog modal-dialog-centered">
             <ModalBody>

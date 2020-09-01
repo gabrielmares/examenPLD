@@ -38,15 +38,15 @@ const SignIn = () => {
 
     // destructuramos los valores del objeto en el context para asignarlos en los campos del form
     const { nombre, email, password, OC } = valuesForm;
-    async function register(valuesForm) {
+    function register(valuesForm) {
 
         try {
-            await clienteAxios.post(`/nuevo`, valuesForm, {
+            clienteAxios.post(`/nuevo`, valuesForm, {
                 headers: {
                     'authorization': `Bearer ${userInfo.token.token}`
                 }
             })
-                .then(() => {
+                .then(res => {
                     setUpdate(true);
                     setValuesForm(initialState);
                 })

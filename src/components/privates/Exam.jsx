@@ -10,7 +10,7 @@ const Exam = (props) => {
     let examen = {};
     const userInfo = useAuth();
     const [get, setGet] = React.useState(false);
-    const { answer, setEvaluacicon, setEvaluar, evaluar, option,  setPrint } = React.useContext(respuestasContext);
+    const { answer, setEvaluacicon, setEvaluar, evaluar, option, setPrint, timeOut, handleTime } = React.useContext(respuestasContext);
     // console.log(userInfo)
 
 
@@ -45,7 +45,7 @@ const Exam = (props) => {
     }
 
 
-    // console.log(userInfo.user.uid)
+
 
 
     const correctAnswer = [
@@ -98,12 +98,28 @@ const Exam = (props) => {
         setPrint(true);
         // return evaluaciones;
     }
+    handleTime(Date.now());
 
-
-
+    // console.log(timeOut, )
+    if (!timeOut && !userInfo.token.claims.hasOwnProperty('oficial')) {
+        return (
+            <>
+                <Modal isOpen={!timeOut} className="modal-dialog modal-dialog-centered">
+                    <ModalBody className="text-center">
+                        <h4>El examen estara disponible hasta el dia</h4>
+                        <h4>7 de Septiembre a las 12 PM</h4>
+                    </ModalBody>
+                    <ModalFooter className="justify-content-center">
+                        <Button color="primary" onClick={() => logOut()}>Cerrar</Button>
+                    </ModalFooter>
+                </Modal>
+            </>
+        )
+    }
 
     return (
         <>
+
             {get ? (
                 <Modal isOpen={get} className="modal-dialog modal-dialog-centered">
                     <ModalBody>
