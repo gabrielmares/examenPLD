@@ -10,13 +10,13 @@ import { ResetPassword } from '../../firebase/firebase'
 
 
 const ListUserCard = () => {
-    const [listUser, setListUser] = React.useState(false);
-    const { update, setUpdate, userInfo, setModal } = React.useContext(registroContext)
+
+    const { update, setUpdate, userInfo, setModal, listUser, setListUser } = React.useContext(registroContext)
 
     React.useEffect(() => {
         if (update || !userInfo.pending) {
-            async function getAll() {
-                await clienteAxios.get('/usuarios', {
+            function getAll() {
+                clienteAxios.get('/usuarios', {
                     headers: {
                         'authorization': `Bearer ${userInfo.token.token}`
                     }
@@ -25,21 +25,22 @@ const ListUserCard = () => {
                         setListUser(res)
                     })
                     .catch(e => console.log(e))
+                setUpdate(false);
             }
-            getAll();
-            setUpdate(false); 
+            return getAll();
         }
 
     }, [setListUser, update, setUpdate, userInfo]);
 
 
 
-
+    console.log(userInfo.pending)
 
     // si el objeto de lista de usuarios esta vacio, se retorna hasta que contenga algo
     if (userInfo.pending || !listUser) {
         return false
     }
+
     const { data: { users } } = listUser;
     // console.log(listUser)
 
@@ -63,8 +64,8 @@ const ListUserCard = () => {
     }
 
     // funcion para eliminar la cuenta registrada a un usuario
-    const toDelete = async (uid, email) => {
-        await clienteAxios.delete(`/delete`, {
+    const toDelete = (uid, email) => {
+        clienteAxios.delete(`/delete`, {
             params: {
                 uid
             },
