@@ -16,7 +16,7 @@ export const registerUser = async (nombre, email, password, OC) => {
     } else {
         OC = 0
     }
-    console.log(OC)
+    // console.log(OC)
     const newUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
     return await newUser.user.updateProfile({
         displayName: nombre,
@@ -40,7 +40,7 @@ export const loginUser = async (email, password) => {
             }
         })
         .catch(e => {
-            console.log(e)
+            // console.log(e)
             return e;
         })
 
@@ -116,7 +116,39 @@ export const ResetPassword = async email => {
 // revisar si ya realizo el examen anteriormente
 export const OnlyOne = async email => {
     const doc = await firebase.firestore().collection('evaluaciones').doc(email).get();
-        // console.log(doc.exists)
+    // console.log(doc.exists)
     return doc;
 
+}
+
+
+// funcion que descarga los examenes ya realizados
+export const ListExamen = () => {
+    const [list, setList] = React.useState({
+        pending: true,
+        examenes : ''
+    })
+
+    // const [pendind, setPending] = React.useState(true)
+    React.useEffect(() => {
+        function get() {
+            firebase.firestore().collection('evaluaciones').onSnapshot(snapshot);
+        }
+        get();
+    }, [])
+    const snapshot = snapshot => {
+        const total = snapshot.docs.map(producto => {
+            return {
+                id: producto.id,
+                ...producto.data()
+            }
+        })
+        setList({
+            pending: false,
+            examenes: total
+        })
+        
+    }
+
+    return list;
 }

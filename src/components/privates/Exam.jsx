@@ -4,21 +4,24 @@ import { respuestasContext } from "../../provider/contextAnswers";
 import Question from './Question';
 import { Preguntas } from '../../Preguntas';
 import { saveDocument, useAuth, OnlyOne, logOut } from '../../firebase/firebase';
-// import ModalDialog from './Modal';
 
 
 const Exam = (props) => {
     let examen = {};
     const userInfo = useAuth();
     const [get, setGet] = React.useState(false);
-    const { answer, setEvaluacicon, setEvaluar, evaluar } = React.useContext(respuestasContext);
+    const { answer, setEvaluacicon, setEvaluar, evaluar, option,  setPrint } = React.useContext(respuestasContext);
+    // console.log(userInfo)
 
 
     React.useEffect(() => {
 
         if (userInfo.user) {
             const { email } = userInfo.user
-            // console.log(email)
+            const { oficial } = userInfo.token.claims
+            if (oficial) {
+                return setGet(false)
+            }
             const getExamen = async (email) => {
                 // console.log(userInfo)
                 await OnlyOne(email)
@@ -40,10 +43,9 @@ const Exam = (props) => {
     if (userInfo.pending) {
         return false;
     }
-    // setGet(true)
 
 
-
+    // console.log(userInfo.user.uid)
 
 
     const correctAnswer = [
@@ -53,17 +55,19 @@ const Exam = (props) => {
         Preguntas[3].respuestas[2],
         Preguntas[4].respuestas[0],
         Preguntas[5].respuestas[1],
-        Preguntas[6].respuestas[1],
-        Preguntas[7].respuestas[1],
-        Preguntas[8].respuestas[1],
-        Preguntas[9].respuestas[1]
+        Preguntas[6].respuestas[0],
+        Preguntas[7].respuestas[2],
+        Preguntas[8].respuestas[2],
+        Preguntas[9].respuestas[1],
+        Preguntas[10].respuestas[2],
+        Preguntas[11].respuestas[0]
     ]
-    // console.log(correctAnswer.length)
+    //  console.log(correctAnswer.length)
     const handleSubmitExam = async e => {
         setEvaluar(false);
         e.preventDefault()
         let evaluaciones = [];
-
+        examen.opciones = option;
         examen.respuestas = answer;
         let arrayAnswers = Object.values(answer);
         // console.log(correctAnswer.length, answer)
@@ -77,7 +81,7 @@ const Exam = (props) => {
         }
         const correctsAnswers = evaluaciones.filter(aprovacion => aprovacion === true)
 
-        examen.calificacion = (correctsAnswers.length / Preguntas.length) * 10
+        examen.calificacion = ((correctsAnswers.length / Preguntas.length) * 10).toFixed(2)
         examen.evaluacion = evaluaciones;
         examen.usuario = {
             email: userInfo.user.email,
@@ -91,7 +95,7 @@ const Exam = (props) => {
         }
         setEvaluacicon(evaluaciones)
         setEvaluar(true);
-
+        setPrint(true);
         // return evaluaciones;
     }
 
@@ -100,17 +104,17 @@ const Exam = (props) => {
 
     return (
         <>
-            {get ? (                
-                    <Modal isOpen={get} className="modal-dialog modal-dialog-centered">
-                        <ModalBody>
-                            {'Has agotado el numero de intentos para contestar el examen'}
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="primary" onClick={() => logOut()}>Cerrar</Button>
-                        </ModalFooter>
-                    </Modal>
+            {get ? (
+                <Modal isOpen={get} className="modal-dialog modal-dialog-centered">
+                    <ModalBody>
+                        {'Has agotado el numero de intentos para contestar el examen'}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={() => logOut()}>Cerrar</Button>
+                    </ModalFooter>
+                </Modal>
             ) : (
-                    <Container color="white" className="move-up">
+                    <Container color="white" className="move-up" id='examen'>
                         <Container>
                             <Form className="bg-white p-4">
                                 <blockquote className="text-center">
@@ -124,12 +128,26 @@ const Exam = (props) => {
                                     )
                                 })}
                                 <Col className="pt-4 d-flex justify-content-center">
-                                    {!evaluar && <Button type="submit" color="primary" style={{ width: '220px' }} onClick={e => handleSubmitExam(e)}>Enviar respuestas</Button>}
+                                    {!evaluar
+                                        && (
+                                            <Button
+                                                type="submit"
+                                                color="primary"
+                                                style={{ width: '220px' }}
+                                                onClick={e => handleSubmitExam(e)}
+                                            >
+                                                Enviar respuestas
+                                            </Button>
+                                        )
+
+                                    }
+
                                 </Col>
                             </Form>
                         </Container >
                     </Container>
-                )}
+                )
+            }
 
         </>
 
