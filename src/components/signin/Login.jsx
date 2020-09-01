@@ -12,7 +12,7 @@ import useValidator from '../../hooks/useValidator'; //Hooks para validaciones
 
 
 import userValidation from '../../rules/userValidation'; // reglas de validacion para el inicio de sesion
-import { PrivateUser } from '../privates';
+import Private, { PrivateUser } from '../privates';
 
 
 const initialState = {
@@ -42,7 +42,7 @@ const Login = (props) => {
                 .then(auth => {
                     if (auth.claims.oficial) {
                         history.push('/pld/resultados');
-                        return <PrivateUser exact path='/pld/resultados' component={ResultsPage} />
+                        return <Private exact path='/pld/resultados' component={ResultsPage} />
                     }
                     history.push('/inicio');
                     return <PrivateUser exact path='/inicio' component={ExamenPage} />

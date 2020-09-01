@@ -27,8 +27,9 @@ const ListUserCard = () => {
                     .catch(e => console.log(e))
             }
             getAll();
+            setUpdate(false); 
         }
-        setUpdate(false);
+
     }, [setListUser, update, setUpdate, userInfo]);
 
 
