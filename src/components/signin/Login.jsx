@@ -39,7 +39,7 @@ const Login = (props) => {
         try {
             loginUser(email, password)
                 .then(res => {
-                    console.log(res)
+                    // console.log(res)
                     if (res.code === "auth/user-not-found") {
                         setErrors({
                             ...errors,
@@ -107,7 +107,7 @@ const Login = (props) => {
 
     }
 
-
+    // console.log('login')
 
     return (
 

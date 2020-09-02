@@ -24,7 +24,6 @@ const HandleAnswer = (props) => {
     const [timeOut, setTimeOut] = React.useState(false);
 
     const [evaluar, setEvaluar] = React.useState(false);
-    const [print, setPrint] = React.useState(false);
 
     const [option, setOption] = React.useState({
         respuesta0: "",
@@ -70,9 +69,7 @@ const HandleAnswer = (props) => {
                 evaluacion,
                 evaluar,
                 option,
-                print,
                 timeOut,
-                setPrint,
                 handleTime,
                 setEvaluar,
                 setEvaluacicon,

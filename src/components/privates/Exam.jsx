@@ -9,8 +9,11 @@ import { saveDocument, useAuth, OnlyOne, logOut } from '../../firebase/firebase'
 const Exam = (props) => {
     let examen = {};
     const userInfo = useAuth();
-    const [get, setGet] = React.useState(false);
-    const { answer, setEvaluacicon, setEvaluar, evaluar, option, setPrint, timeOut, handleTime } = React.useContext(respuestasContext);
+    const [get, setGet] = React.useState({
+        active: false,
+        msg: ''
+    });
+    const { answer, setEvaluacicon, evaluar, option, timeOut, handleTime } = React.useContext(respuestasContext);
     // console.log(userInfo)
 
 
@@ -28,7 +31,10 @@ const Exam = (props) => {
                     .then(respuesta => {
                         if (respuesta.exists) {
                             // console.log(respuesta)
-                            setGet(true);
+                            setGet({
+                                active: true,
+                                msg: 'Tu evaluacion ya se ha enviado al Oficial de Cumplimiento, Gracias'
+                            });
                         }
                     })
                     .catch(e => {
@@ -62,15 +68,12 @@ const Exam = (props) => {
         Preguntas[10].respuestas[2],
         Preguntas[11].respuestas[0]
     ]
-    //  console.log(correctAnswer.length)
-    const handleSubmitExam = async e => {
-        setEvaluar(false);
+    const handleSubmitExam = e => {
         e.preventDefault()
         let evaluaciones = [];
         examen.opciones = option;
         examen.respuestas = answer;
         let arrayAnswers = Object.values(answer);
-        // console.log(correctAnswer.length, answer)
         for (let i = 0; i < correctAnswer.length; i++) {
             if (correctAnswer[i] === arrayAnswers[i]) {
                 evaluaciones.push(true);
@@ -88,26 +91,34 @@ const Exam = (props) => {
             nombre: userInfo.user.displayName
         }
         try {
-            const respServer = await saveDocument(examen);
-            console.log(respServer);
+            saveDocument(examen)
+                .then(done => {
+                    setGet({
+                        active: true,
+                        msg: 'Tu evaluacion se ha enviado al Oficial de Cumplimiento, Gracias'
+                    })
+                })
+
         } catch (error) {
             console.error('Ha sucedido un error', error);
         }
         setEvaluacicon(evaluaciones)
-        setEvaluar(true);
-        setPrint(true);
         // return evaluaciones;
     }
     handleTime(Date.now());
 
-    // console.log(timeOut, )
     if (!timeOut && !userInfo.token.claims.hasOwnProperty('oficial')) {
+        // return setGet({
+        //     active: true,
+        //     msg:'El examen estara disponible hasta el dia \r 7 de Septiembre a las 12 PM \r Gracias por validar el acceso'
+        // })
+
         return (
             <>
                 <Modal isOpen={!timeOut} className="modal-dialog modal-dialog-centered">
                     <ModalBody className="text-center">
                         <h4>El examen estara disponible hasta el dia</h4>
-                        <h4>7 de Septiembre a las 12 PM</h4>
+                        <h4>5 de Septiembre a las 12 PM</h4>
                         <small>Gracias por validar el acceso</small>
                     </ModalBody>
                     <ModalFooter className="justify-content-center">
@@ -121,12 +132,12 @@ const Exam = (props) => {
     return (
         <>
 
-            {get ? (
-                <Modal isOpen={get} className="modal-dialog modal-dialog-centered">
-                    <ModalBody>
-                        {'Has agotado el numero de intentos para contestar el examen'}
+            {(get.active) ? (
+                <Modal isOpen={get.active} className="modal-dialog modal-dialog-centered">
+                    <ModalBody className="text-center">
+                        <h4>{get.msg}</h4>
                     </ModalBody>
-                    <ModalFooter>
+                    <ModalFooter className="justify-content-center">
                         <Button color="primary" onClick={() => logOut()}>Cerrar</Button>
                     </ModalFooter>
                 </Modal>
