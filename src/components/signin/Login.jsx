@@ -30,17 +30,29 @@ const Login = (props) => {
         handleChange, setErrors } = useValidator(initialState, userValidation, loginfn);
 
 
-    // extraer el context para el spinner de carga de datos
 
 
 
     const { email, password } = valuesForm;
-    async function loginfn(valuesForm) {
+    function loginfn(valuesForm) {
         const { email, password } = valuesForm;
         try {
-            await loginUser(email, password)
-                .then(auth => {
-                    if (auth.claims.oficial) {
+            loginUser(email, password)
+                .then(res => {
+                    console.log(res)
+                    if (res.code === "auth/user-not-found") {
+                        setErrors({
+                            ...errors,
+                            email: "El correo que ingreso no es valido"
+                        })
+                    }
+                    if (res.code === "auth/wrong-password") {
+                        setErrors({
+                            ...errors,
+                            password: "La contraseña no es valida"
+                        })
+                    }
+                    if (res.claims.oficial) {
                         history.push('/pld/resultados');
                         return <Private exact path='/pld/resultados' component={ResultsPage} />
                     }
@@ -49,24 +61,42 @@ const Login = (props) => {
 
                 })
                 .catch(error => {
-                    console.error(error);
+                    console.error('Hubo un error al ingresar', error);
+                    if (error.message === "auth/wrong-password") {
+                        setErrors({
+                            ...errors,
+                            password: "La contraseña no es valida"
+                        })
+                    }
+                    if (error.message === "EMAIL_NOT_FOUND") {
+                        setErrors({
+                            ...errors,
+                            email: "El correo que ingreso no es valido"
+                        })
+                    }
+                    if (error.message === "auth/too-many-requests") {
+                        setErrors({
+                            ...errors,
+                            intentos: "has excedido el maximo de intentos fallidos, espera 15 minutos"
+                        })
+                    }
                 })
 
         } catch (error) {
             console.error('Hubo un error al registrar al usuario', error);
-            if (error.code === "auth/wrong-password") {
+            if (error.message === "auth/wrong-password") {
                 setErrors({
                     ...errors,
                     password: "La contraseña no es valida"
                 })
             }
-            if (error.code === "auth/user-not-found") {
+            if (error.message === "EMAIL_NOT_FOUND") {
                 setErrors({
                     ...errors,
                     email: "El correo que ingreso no es valido"
                 })
             }
-            if (error.code === "auth/too-many-requests") {
+            if (error.message === "auth/too-many-requests") {
                 setErrors({
                     ...errors,
                     intentos: "has excedido el maximo de intentos fallidos, espera 15 minutos"

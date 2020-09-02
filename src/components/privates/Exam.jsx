@@ -108,6 +108,7 @@ const Exam = (props) => {
                     <ModalBody className="text-center">
                         <h4>El examen estara disponible hasta el dia</h4>
                         <h4>7 de Septiembre a las 12 PM</h4>
+                        <small>Gracias por validar el acceso</small>
                     </ModalBody>
                     <ModalFooter className="justify-content-center">
                         <Button color="primary" onClick={() => logOut()}>Cerrar</Button>

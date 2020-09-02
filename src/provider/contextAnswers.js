@@ -56,9 +56,7 @@ const HandleAnswer = (props) => {
     }
 
     const handleTime = hoy => {
-        const fechaExamen = new Date('September 1, 2020 15:25:00');
-        console.log(fechaExamen, " \r", hoy)
-        console.log(fechaExamen-hoy)
+        const fechaExamen = new Date('September 5, 2020 12:00:00');
         if (fechaExamen < hoy) {
             return setTimeOut(true)
         }
